@@ -44,20 +44,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditabl
         await File.WriteAllTextAsync(Path, result);
 
         return entity;
-        throw new NotImplementedException();
     }
 
-    public async Task<List<TEntity>> SelectAllAsync()
-    {
-        var str = await File.ReadAllTextAsync(Path);
-        var entities = JsonConvert.DeserializeObject<List<TEntity>>(str);
-        return entities;
-    }
-
-    public async Task<TEntity> SelectByIdAsync(long id)
-    {
-        return (await SelectAllAsync()).FirstOrDefault(e => e.Id == id);
-    }
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
@@ -76,4 +64,17 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditabl
 
         return entity;
     }
+    public async Task<List<TEntity>> SelectAllAsync()
+    {
+        var str = await File.ReadAllTextAsync(Path);
+        var entities = JsonConvert.DeserializeObject<List<TEntity>>(str);
+        return entities;
+    }   
+    public async Task<TEntity> SelectByIdAsync(long id)
+    {
+        return (await SelectAllAsync()).FirstOrDefault(e => e.Id == id);
+    }
+
+
+   
 }
